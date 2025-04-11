@@ -1,4 +1,3 @@
-
 import React from "react";
 import SectionHeader from "../SectionHeader";
 import { Award, GraduationCap } from "lucide-react";
@@ -155,14 +154,12 @@ const Education = () => {
       institution: "Nalanda Public Hr. Sec. School",
       degree: "High School",
       period: "2015 - 2017",
-      skills: ["Java"],
       location: "Satna, Madhya Pradesh, India"
     },
     {
       institution: "St. Claret School",
       degree: "ICSE | Secondary School",
       period: "2006 - 2015",
-      skills: ["Java"],
       location: "India"
     }
   ];
@@ -194,7 +191,7 @@ const Education = () => {
         "Deep Learning", 
         "Convolutional Neural Networks (CNN)"
       ],
-      logo: "https://cdn-images-1.medium.com/max/1200/1*LF-TP-oKG7E-Ht0X_TGaSg.png"
+      logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Coursera-Logo_600x600.svg/1200px-Coursera-Logo_600x600.svg.png"
     },
     {
       title: "Programming for Everybody (Getting Started with Python)",
@@ -202,7 +199,7 @@ const Education = () => {
       date: "Jul 2020",
       credentialId: "GD9RSEPZ578N",
       skills: ["Python"],
-      logo: "https://cdn-images-1.medium.com/max/1200/1*LF-TP-oKG7E-Ht0X_TGaSg.png"
+      logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Coursera-Logo_600x600.svg/1200px-Coursera-Logo_600x600.svg.png"
     },
     {
       title: "Python Data Structures",
@@ -210,7 +207,7 @@ const Education = () => {
       date: "Jul 2020",
       credentialId: "AYWEVFLYXDZZ",
       skills: ["Python"],
-      logo: "https://cdn-images-1.medium.com/max/1200/1*LF-TP-oKG7E-Ht0X_TGaSg.png"
+      logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Coursera-Logo_600x600.svg/1200px-Coursera-Logo_600x600.svg.png"
     }
   ];
 

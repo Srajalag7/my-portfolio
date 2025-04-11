@@ -7,7 +7,7 @@ const Hero = () => {
   return (
     <section id="hero" className="min-h-screen flex items-center relative overflow-hidden pt-20">
       <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/20"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/20 dark:from-primary/10 dark:to-accent/30"></div>
       </div>
       
       <div className="section-container relative z-10">
@@ -35,7 +35,7 @@ const Hero = () => {
                   Get in Touch
                 </a>
                 <a 
-                  href="/path-to-resume.pdf" 
+                  href="https://drive.google.com/file/d/1jlRmSoPs5i5r-2YLEe5z9IEiZQNC5HOq/view?usp=drive_link" 
                   target="_blank"
                   rel="noopener noreferrer"
                   className="px-6 py-3 border border-primary text-primary rounded-lg font-medium hover:bg-primary/5 transition-colors"
@@ -46,7 +46,7 @@ const Hero = () => {
               
               <div className="flex items-center gap-5 pt-4 animate-fade-in animate-delay-500">
                 <a 
-                  href="https://github.com/your-github-username" 
+                  href="https://github.com/Srajalag7" 
                   target="_blank"
                   rel="noopener noreferrer"
                   className="p-2 border border-gray-300 dark:border-gray-700 rounded-full hover:bg-primary hover:border-primary hover:text-white transition-colors"
@@ -55,7 +55,7 @@ const Hero = () => {
                   <Github size={20} />
                 </a>
                 <a 
-                  href="https://linkedin.com/in/your-linkedin-username" 
+                  href="https://www.linkedin.com/in/srajalag7/" 
                   target="_blank"
                   rel="noopener noreferrer"
                   className="p-2 border border-gray-300 dark:border-gray-700 rounded-full hover:bg-primary hover:border-primary hover:text-white transition-colors"
@@ -64,7 +64,7 @@ const Hero = () => {
                   <Linkedin size={20} />
                 </a>
                 <a 
-                  href="mailto:your.email@example.com" 
+                  href="mailto:agrawalsrajal2012@gmail.com" 
                   className="p-2 border border-gray-300 dark:border-gray-700 rounded-full hover:bg-primary hover:border-primary hover:text-white transition-colors"
                   aria-label="Email"
                 >
@@ -75,7 +75,7 @@ const Hero = () => {
           </div>
           
           <div className="order-1 md:order-2 flex justify-center">
-            <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-white shadow-xl animate-fade-in">
+            <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-white dark:border-gray-800 shadow-xl animate-fade-in">
               <img 
                 src="/lovable-uploads/0a084d41-8817-41f8-84ea-4d2f8e2c7156.png" 
                 alt="Srajal Agrawal" 

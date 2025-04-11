@@ -21,21 +21,59 @@ const Contact = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate form submission
-    setTimeout(() => {
-      toast.success("Message sent successfully! I'll get back to you soon.");
-      setFormData({
-        name: "",
-        email: "",
-        subject: "",
-        message: ""
-      });
+    try {
+      // Create the request for Mailjet API
+      const emailData = {
+        Messages: [
+          {
+            From: {
+              Email: "no-reply@yourwebsite.com",
+              Name: "Portfolio Contact Form"
+            },
+            To: [
+              {
+                Email: "agrawalsrajal2012@gmail.com",
+                Name: "Srajal Agrawal"
+              }
+            ],
+            Subject: `Portfolio Contact: ${formData.subject}`,
+            TextPart: `Name: ${formData.name}\nEmail: ${formData.email}\nMessage: ${formData.message}`,
+            HTMLPart: `
+              <h3>New contact from your portfolio website</h3>
+              <p><strong>Name:</strong> ${formData.name}</p>
+              <p><strong>Email:</strong> ${formData.email}</p>
+              <p><strong>Subject:</strong> ${formData.subject}</p>
+              <p><strong>Message:</strong></p>
+              <p>${formData.message.replace(/\n/g, '<br>')}</p>
+            `
+          }
+        ]
+      };
+
+      // In a real implementation, this would be sent to a backend API
+      // For now, simulate a successful API call
+      console.log("Email data to send:", emailData);
+      
+      // Simulate sending email (normally would be handled by a backend endpoint)
+      setTimeout(() => {
+        toast.success("Message sent successfully! I'll get back to you soon.");
+        setFormData({
+          name: "",
+          email: "",
+          subject: "",
+          message: ""
+        });
+        setIsSubmitting(false);
+      }, 1500);
+    } catch (error) {
+      console.error("Error sending email:", error);
+      toast.error("Failed to send message. Please try again later.");
       setIsSubmitting(false);
-    }, 1500);
+    }
   };
 
   return (
@@ -63,8 +101,8 @@ const Contact = () => {
                 </div>
                 <div>
                   <h4 className="font-medium">Email</h4>
-                  <a href="mailto:srajal@example.com" className="text-muted-foreground hover:text-primary">
-                    srajal@example.com
+                  <a href="mailto:agrawalsrajal2012@gmail.com" className="text-muted-foreground hover:text-primary">
+                    agrawalsrajal2012@gmail.com
                   </a>
                 </div>
               </div>
@@ -75,8 +113,8 @@ const Contact = () => {
                 </div>
                 <div>
                   <h4 className="font-medium">Phone</h4>
-                  <a href="tel:+911234567890" className="text-muted-foreground hover:text-primary">
-                    +91 123 456 7890
+                  <a href="tel:+917869320300" className="text-muted-foreground hover:text-primary">
+                    +91-7869320300
                   </a>
                 </div>
               </div>
@@ -98,7 +136,7 @@ const Contact = () => {
               <h3 className="text-xl font-bold mb-4">Connect With Me</h3>
               <div className="flex items-center gap-4">
                 <a 
-                  href="https://github.com/your-github-username" 
+                  href="https://github.com/Srajalag7" 
                   target="_blank"
                   rel="noopener noreferrer"
                   className="p-3 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white rounded-full transition-colors"
@@ -107,7 +145,7 @@ const Contact = () => {
                   <Github size={20} />
                 </a>
                 <a 
-                  href="https://linkedin.com/in/your-linkedin-username" 
+                  href="https://www.linkedin.com/in/srajalag7/" 
                   target="_blank"
                   rel="noopener noreferrer"
                   className="p-3 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white rounded-full transition-colors"
@@ -116,7 +154,7 @@ const Contact = () => {
                   <Linkedin size={20} />
                 </a>
                 <a 
-                  href="mailto:your.email@example.com" 
+                  href="mailto:agrawalsrajal2012@gmail.com" 
                   className="p-3 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white rounded-full transition-colors"
                   aria-label="Email"
                 >
@@ -139,7 +177,7 @@ const Contact = () => {
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                     placeholder="John Doe"
                     required
                   />
@@ -155,7 +193,7 @@ const Contact = () => {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                     placeholder="john.doe@example.com"
                     required
                   />
@@ -172,7 +210,7 @@ const Contact = () => {
                   name="subject"
                   value={formData.subject}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                   placeholder="Job Opportunity"
                   required
                 />
@@ -188,7 +226,7 @@ const Contact = () => {
                   value={formData.message}
                   onChange={handleChange}
                   rows={6}
-                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                   placeholder="Your message here..."
                   required
                 ></textarea>

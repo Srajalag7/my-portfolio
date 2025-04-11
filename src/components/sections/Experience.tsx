@@ -29,7 +29,7 @@ const ExperienceItem: React.FC<ExperienceItemProps> = ({
 
   return (
     <div className={`relative pl-8 pb-12 border-l-2 ${categoryColors[category]}`}>
-      <div className={`absolute left-[-9px] top-0 w-4 h-4 rounded-full bg-white border-2 ${categoryColors[category]}`}></div>
+      <div className={`absolute left-[-9px] top-0 w-4 h-4 rounded-full bg-white dark:bg-gray-800 border-2 ${categoryColors[category]}`}></div>
       <div className="space-y-4">
         <div className="flex items-start justify-between">
           <div>
@@ -44,7 +44,7 @@ const ExperienceItem: React.FC<ExperienceItemProps> = ({
               category === "ml" ? "tech-tag-ml" : "tech-tag-cloud"
             }`}>
               {category === "ai" ? "AI Engineering" : 
-               category === "webdev" ? "Web Development" : 
+               category === "webdev" ? "Full Stack Development" : 
                category === "ml" ? "Machine Learning" : "Leadership"}
             </span>
           </div>
@@ -105,20 +105,21 @@ const Experience = () => {
       category: "ai"
     },
     {
-      title: "Software Engineer",
+      title: "Full Stack Engineer",
       company: "VMock",
       period: "Jun 2023 - May 2024",
       description: [
         "Led full-stack development of high-performance analytics and administrative systems supporting 5M+ student records, delivering sub-100ms query performance.",
+        "Built robust backend services with Laravel/PHP and designed RESTful APIs for seamless frontend-backend communication.",
         "Architected real-time ElasticSearch synchronization service processing 150K+ records daily, reducing data retrieval latency by 85%.",
-        "Developed React analytics dashboard with dynamic filtering supporting 20+ filters for comprehensive student cohort management.",
+        "Developed responsive React analytics dashboard with dynamic filtering supporting 20+ filters for comprehensive student cohort management.",
         "Engineered abstraction layer using PHP Laravel that facilitated 3x platform growth through seamless product integration."
       ],
       skills: ["Elasticsearch", "Laravel", "React Hooks", "PHP", "Software Development", "Amazon S3", "AWS", "Git", "JavaScript", "HTML", "Kubernetes", "Leadership", "Database Queries", "Redis", "Databases", "Node.js", "Amazon SNS", "Cron", "Web Projects", "Amazon EKS", "Front-End Development", "DevOps", "Microservices", "SQL", "React.js"],
       category: "webdev"
     },
     {
-      title: "Software Engineer",
+      title: "QA Automation Engineer",
       company: "VMock",
       period: "Dec 2022 - May 2023",
       description: [

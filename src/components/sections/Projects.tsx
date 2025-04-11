@@ -1,7 +1,7 @@
 
-import React from "react";
+import React, { useState } from "react";
 import SectionHeader from "../SectionHeader";
-import { ExternalLink, Github } from "lucide-react";
+import { ChevronDown, ChevronUp } from "lucide-react";
 
 interface ProjectCardProps {
   title: string;
@@ -11,8 +11,6 @@ interface ProjectCardProps {
   points: string[];
   skills: string[];
   category: "ai" | "webdev" | "ml";
-  github?: string;
-  demo?: string;
 }
 
 const ProjectCard: React.FC<ProjectCardProps> = ({
@@ -23,9 +21,11 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   points,
   skills,
   category,
-  github,
-  demo,
 }) => {
+  const [showAllSkills, setShowAllSkills] = useState(false);
+  const visibleSkills = showAllSkills ? skills : skills.slice(0, 6);
+  const hiddenSkillsCount = skills.length - 6;
+  
   return (
     <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
       <div className="p-6">
@@ -59,45 +59,31 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
           </ul>
         )}
         
-        <div className="flex flex-wrap gap-2 mt-4 mb-6">
-          {skills.slice(0, 6).map((skill, idx) => (
+        <div className="flex flex-wrap gap-2 mt-4">
+          {visibleSkills.map((skill, idx) => (
             <span key={idx} className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-xs font-medium rounded-full">
               {skill}
             </span>
           ))}
           {skills.length > 6 && (
-            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-xs font-medium rounded-full">
-              +{skills.length - 6} more
-            </span>
+            <button 
+              onClick={() => setShowAllSkills(!showAllSkills)}
+              className="px-2 py-1 bg-primary/10 text-primary dark:bg-primary/20 text-xs font-medium rounded-full flex items-center gap-1 hover:bg-primary/20 dark:hover:bg-primary/30 transition-colors cursor-pointer"
+            >
+              {showAllSkills ? (
+                <>
+                  <ChevronUp size={12} />
+                  Show Less
+                </>
+              ) : (
+                <>
+                  <ChevronDown size={12} />
+                  +{hiddenSkillsCount} more
+                </>
+              )}
+            </button>
           )}
         </div>
-        
-        {(github || demo) && (
-          <div className="flex gap-3 mt-4">
-            {github && (
-              <a
-                href={github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center text-sm font-medium text-primary hover:underline"
-              >
-                <Github size={16} className="mr-1" />
-                Code
-              </a>
-            )}
-            {demo && (
-              <a
-                href={demo}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center text-sm font-medium text-primary hover:underline"
-              >
-                <ExternalLink size={16} className="mr-1" />
-                Live Demo
-              </a>
-            )}
-          </div>
-        )}
       </div>
     </div>
   );
@@ -126,9 +112,7 @@ const Projects = () => {
         "Sentiment Analysis", 
         "SQL"
       ],
-      category: "ai",
-      github: "#",
-      demo: "#"
+      category: "ai"
     },
     {
       title: "Corporate Credit Risk Assessment",
@@ -146,8 +130,7 @@ const Projects = () => {
         "Deep Learning", 
         "Data Mining"
       ],
-      category: "ml",
-      github: "#"
+      category: "ml"
     },
     {
       title: "Sound Event Detection",
@@ -166,8 +149,7 @@ const Projects = () => {
         "Machine Learning", 
         "Deep Learning"
       ],
-      category: "ml",
-      github: "#"
+      category: "ml"
     }
   ];
 

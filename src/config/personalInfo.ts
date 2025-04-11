@@ -9,6 +9,7 @@
 export const personalInfo = {
   name: "Srajal Agrawal",
   title: "GenAI Engineer & Full-Stack Developer",
+  subtitle: "2.5+ Years Experience",
   phone: "+91-7869320300",
   email: "agrawalsrajal2012@gmail.com",
   location: "Gurugram, Haryana, India",

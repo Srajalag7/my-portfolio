@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import SectionHeader from "../SectionHeader";
 import { Award, ChevronDown, ChevronUp, GraduationCap } from "lucide-react";
@@ -136,7 +135,7 @@ const CertificationItem: React.FC<CertificationItemProps> = ({
               {skills.length > 4 && (
                 <button 
                   onClick={() => setShowAllSkills(!showAllSkills)}
-                  className="px-2 py-1 bg-primary/10 text-primary dark:bg-primary/20 text-xs font-medium rounded-full flex items-center gap-1 hover:bg-primary/20 dark:hover:bg-primary/30 transition-colors"
+                  className="px-2 py-1 bg-primary/10 text-primary dark:bg-primary/20 text-xs font-medium rounded-full flex items-center gap-1 hover:bg-primary/20 dark:hover:bg-primary/30 transition-colors cursor-pointer"
                 >
                   {showAllSkills ? (
                     <>
@@ -160,7 +159,7 @@ const CertificationItem: React.FC<CertificationItemProps> = ({
 };
 
 const Education = () => {
-  const educationItems: EducationItemProps[] = [
+  const educationItems = [
     {
       institution: "Indian Institute of Technology, Kanpur",
       degree: "Bachelor of Technology, Mechanical Engineering",
@@ -182,7 +181,7 @@ const Education = () => {
     }
   ];
 
-  const testScores: TestScoreItemProps[] = [
+  const testScores = [
     {
       title: "JEE Advanced",
       score: "Score: 1470 Rank",
@@ -195,7 +194,7 @@ const Education = () => {
     }
   ];
 
-  const certifications: CertificationItemProps[] = [
+  const certifications = [
     {
       title: "Neural Networks and Deep Learning",
       issuer: "Coursera",
@@ -209,7 +208,7 @@ const Education = () => {
         "Deep Learning", 
         "Convolutional Neural Networks (CNN)"
       ],
-      logo: "https://d3njjcbhbojbot.cloudfront.net/api/utilities/v1/imageproxy/https://coursera-university-assets.s3.amazonaws.com/70/de505d47be7d3a063b51b6f856a6e2/NewCoursera-Logo-800x800.png"
+      logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Coursera-Logo_600x600.svg/1200px-Coursera-Logo_600x600.svg.png"
     },
     {
       title: "Programming for Everybody (Getting Started with Python)",
@@ -217,7 +216,7 @@ const Education = () => {
       date: "Jul 2020",
       credentialId: "GD9RSEPZ578N",
       skills: ["Python"],
-      logo: "https://d3njjcbhbojbot.cloudfront.net/api/utilities/v1/imageproxy/https://coursera-university-assets.s3.amazonaws.com/70/de505d47be7d3a063b51b6f856a6e2/NewCoursera-Logo-800x800.png"
+      logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Coursera-Logo_600x600.svg/1200px-Coursera-Logo_600x600.svg.png"
     },
     {
       title: "Python Data Structures",
@@ -225,7 +224,7 @@ const Education = () => {
       date: "Jul 2020",
       credentialId: "AYWEVFLYXDZZ",
       skills: ["Python"],
-      logo: "https://d3njjcbhbojbot.cloudfront.net/api/utilities/v1/imageproxy/https://coursera-university-assets.s3.amazonaws.com/70/de505d47be7d3a063b51b6f856a6e2/NewCoursera-Logo-800x800.png"
+      logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Coursera-Logo_600x600.svg/1200px-Coursera-Logo_600x600.svg.png"
     }
   ];
 

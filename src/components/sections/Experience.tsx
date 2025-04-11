@@ -1,7 +1,7 @@
 
 import React, { useState } from "react";
 import SectionHeader from "../SectionHeader";
-import { ArrowUpRight, Briefcase, ChevronDown, ChevronUp } from "lucide-react";
+import { Briefcase, ChevronDown, ChevronUp, Circle } from "lucide-react";
 
 interface ExperienceItemProps {
   title: string;
@@ -9,7 +9,7 @@ interface ExperienceItemProps {
   period: string;
   description: string[];
   skills: string[];
-  category: "ai" | "webdev" | "ml" | "leadership";
+  category: "ai" | "webdev" | "ml" | "leadership" | "backend";
 }
 
 const ExperienceItem: React.FC<ExperienceItemProps> = ({
@@ -26,6 +26,7 @@ const ExperienceItem: React.FC<ExperienceItemProps> = ({
     webdev: "border-tech-webdev",
     ml: "border-tech-ml",
     leadership: "border-tech-cloud",
+    backend: "border-tech-webdev",
   };
 
   const visibleSkills = showAllSkills ? skills : skills.slice(0, 8);
@@ -45,11 +46,15 @@ const ExperienceItem: React.FC<ExperienceItemProps> = ({
             <span className={`tech-tag ${
               category === "ai" ? "tech-tag-ai" : 
               category === "webdev" ? "tech-tag-webdev" : 
-              category === "ml" ? "tech-tag-ml" : "tech-tag-cloud"
+              category === "ml" ? "tech-tag-ml" : 
+              category === "backend" ? "tech-tag-webdev" :
+              "tech-tag-cloud"
             }`}>
               {category === "ai" ? "AI Engineering" : 
                category === "webdev" ? "Full Stack Development" : 
-               category === "ml" ? "Machine Learning" : "Leadership"}
+               category === "ml" ? "Machine Learning" : 
+               category === "backend" ? "Backend Engineering" :
+               "Leadership"}
             </span>
           </div>
         </div>
@@ -57,7 +62,7 @@ const ExperienceItem: React.FC<ExperienceItemProps> = ({
         <ul className="space-y-2 text-gray-700 dark:text-gray-300">
           {description.map((item, index) => (
             <li key={index} className="flex items-start">
-              <ArrowUpRight className="min-w-[16px] h-4 mt-1 mr-2 text-primary" />
+              <Circle className="min-w-[8px] h-2 mt-2 mr-3 text-primary fill-primary" />
               <span>{item}</span>
             </li>
           ))}
@@ -72,7 +77,7 @@ const ExperienceItem: React.FC<ExperienceItemProps> = ({
           {skills.length > 8 && (
             <button 
               onClick={() => setShowAllSkills(!showAllSkills)}
-              className="px-3 py-1 bg-primary/10 text-primary dark:bg-primary/20 text-xs font-medium rounded-full flex items-center gap-1 hover:bg-primary/20 dark:hover:bg-primary/30 transition-colors"
+              className="px-3 py-1 bg-primary/10 text-primary dark:bg-primary/20 text-xs font-medium rounded-full flex items-center gap-1 hover:bg-primary/20 dark:hover:bg-primary/30 transition-colors cursor-pointer"
             >
               {showAllSkills ? (
                 <>
@@ -133,7 +138,7 @@ const Experience = () => {
         "Engineered abstraction layer using PHP Laravel that facilitated 3x platform growth through seamless product integration."
       ],
       skills: ["Elasticsearch", "Laravel", "React Hooks", "PHP", "Software Development", "Amazon S3", "AWS", "Git", "JavaScript", "HTML", "Kubernetes", "Leadership", "Database Queries", "Redis", "Databases", "Node.js", "Amazon SNS", "Cron", "Web Projects", "Amazon EKS", "Front-End Development", "DevOps", "Microservices", "SQL", "React.js"],
-      category: "webdev"
+      category: "backend"
     },
     {
       title: "Software Engineer",
@@ -146,7 +151,7 @@ const Experience = () => {
         "Standardized QA processes across development teams, significantly reducing production bugs and inter-team handoff delays."
       ],
       skills: ["Codeception", "CI/CD", "QA Automation", "PHP", "Amazon S3", "AWS", "Git", "Quality Assurance", "Kubernetes", "Leadership", "Test Automation", "Software Development", "Gherkin", "Amazon EKS", "DevOps", "Microservices", "SQL"],
-      category: "webdev"
+      category: "backend"
     },
     {
       title: "Secretary, Hospitality and Transport",

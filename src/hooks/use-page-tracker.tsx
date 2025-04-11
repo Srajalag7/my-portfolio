@@ -32,6 +32,34 @@ export const usePageTracker = () => {
         // Log for debugging
         console.log('Page view tracked:', newView);
         console.log('Total views:', viewsData.length);
+        
+        // Add to window object for easy access
+        (window as any).getPageViews = () => {
+          const data = localStorage.getItem('pageViewData');
+          return data ? JSON.parse(data) : [];
+        };
+        
+        (window as any).getPageViewStats = () => {
+          const data = localStorage.getItem('pageViewData');
+          const views = data ? JSON.parse(data) as PageViewData[] : [];
+          
+          if (views.length === 0) return { totalViews: 0, pathBreakdown: {} };
+          
+          const pathBreakdown: Record<string, number> = {};
+          views.forEach(view => {
+            pathBreakdown[view.path] = (pathBreakdown[view.path] || 0) + 1;
+          });
+          
+          return {
+            totalViews: views.length,
+            uniqueVisitors: new Set(views.map(v => v.userAgent)).size,
+            pathBreakdown,
+            referrerBreakdown: views.reduce((acc, view) => {
+              acc[view.referrer] = (acc[view.referrer] || 0) + 1;
+              return acc;
+            }, {} as Record<string, number>)
+          };
+        };
       } catch (error) {
         console.error('Error tracking page view:', error);
       }
@@ -39,9 +67,5 @@ export const usePageTracker = () => {
 
     // Track the page view
     trackPageView();
-    
-    // Optional: You could set up an interval to periodically send this data to a backend
-    // const interval = setInterval(() => sendDataToBackend(), 60000);
-    // return () => clearInterval(interval);
   }, []);
 };

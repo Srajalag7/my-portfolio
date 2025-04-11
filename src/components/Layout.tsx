@@ -27,14 +27,14 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       return `📊 Portfolio has ${pageViews.totalViews} total views from approximately ${pageViews.uniqueVisitors} unique visitors`;
     };
     
-    // Create a function to get contact form submissions (if you were using Supabase)
+    // Create a function to get contact form submissions (from Supabase)
     (window as any).viewContactSubmissions = () => {
-      console.log('To view contact form submissions, you need to:');
-      console.log('1. Set up Supabase integration (click the Supabase button)');
-      console.log('2. Log into your Supabase dashboard');
-      console.log('3. Go to the "Table Editor" and look for the "contact_submissions" table');
+      console.log('To view contact form submissions:');
+      console.log('1. Log into your Supabase dashboard');
+      console.log('2. Go to the "Table Editor" and check the "contact_submissions" table');
+      console.log('3. You can see all submissions with details like name, email, message, etc.');
       
-      return 'To view contact form submissions, connect and check your Supabase dashboard';
+      return 'To view contact form submissions, check your Supabase dashboard "contact_submissions" table';
     };
   }, []);
   

@@ -1,6 +1,7 @@
-import React from "react";
+
+import React, { useState } from "react";
 import SectionHeader from "../SectionHeader";
-import { Award, GraduationCap } from "lucide-react";
+import { Award, ChevronDown, ChevronUp, GraduationCap } from "lucide-react";
 
 interface EducationItemProps {
   institution: string;
@@ -98,6 +99,10 @@ const CertificationItem: React.FC<CertificationItemProps> = ({
   skills,
   logo
 }) => {
+  const [showAllSkills, setShowAllSkills] = useState(false);
+  const visibleSkills = showAllSkills ? skills : skills.slice(0, 4);
+  const hiddenSkillsCount = skills.length - 4;
+
   return (
     <div className="p-5 bg-white dark:bg-gray-800 rounded-xl shadow-md hover:shadow-lg transition-shadow">
       <div className="flex items-start gap-4">
@@ -123,15 +128,28 @@ const CertificationItem: React.FC<CertificationItemProps> = ({
           
           {skills && skills.length > 0 && (
             <div className="flex flex-wrap gap-2 mt-3">
-              {skills.slice(0, 4).map((skill, index) => (
+              {visibleSkills.map((skill, index) => (
                 <span key={index} className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-xs font-medium rounded-full">
                   {skill}
                 </span>
               ))}
               {skills.length > 4 && (
-                <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-xs font-medium rounded-full">
-                  +{skills.length - 4} more
-                </span>
+                <button 
+                  onClick={() => setShowAllSkills(!showAllSkills)}
+                  className="px-2 py-1 bg-primary/10 text-primary dark:bg-primary/20 text-xs font-medium rounded-full flex items-center gap-1 hover:bg-primary/20 dark:hover:bg-primary/30 transition-colors"
+                >
+                  {showAllSkills ? (
+                    <>
+                      <ChevronUp size={12} />
+                      Show Less
+                    </>
+                  ) : (
+                    <>
+                      <ChevronDown size={12} />
+                      +{hiddenSkillsCount} more
+                    </>
+                  )}
+                </button>
               )}
             </div>
           )}
@@ -191,7 +209,7 @@ const Education = () => {
         "Deep Learning", 
         "Convolutional Neural Networks (CNN)"
       ],
-      logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Coursera-Logo_600x600.svg/1200px-Coursera-Logo_600x600.svg.png"
+      logo: "https://d3njjcbhbojbot.cloudfront.net/api/utilities/v1/imageproxy/https://coursera-university-assets.s3.amazonaws.com/70/de505d47be7d3a063b51b6f856a6e2/NewCoursera-Logo-800x800.png"
     },
     {
       title: "Programming for Everybody (Getting Started with Python)",
@@ -199,7 +217,7 @@ const Education = () => {
       date: "Jul 2020",
       credentialId: "GD9RSEPZ578N",
       skills: ["Python"],
-      logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Coursera-Logo_600x600.svg/1200px-Coursera-Logo_600x600.svg.png"
+      logo: "https://d3njjcbhbojbot.cloudfront.net/api/utilities/v1/imageproxy/https://coursera-university-assets.s3.amazonaws.com/70/de505d47be7d3a063b51b6f856a6e2/NewCoursera-Logo-800x800.png"
     },
     {
       title: "Python Data Structures",
@@ -207,7 +225,7 @@ const Education = () => {
       date: "Jul 2020",
       credentialId: "AYWEVFLYXDZZ",
       skills: ["Python"],
-      logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Coursera-Logo_600x600.svg/1200px-Coursera-Logo_600x600.svg.png"
+      logo: "https://d3njjcbhbojbot.cloudfront.net/api/utilities/v1/imageproxy/https://coursera-university-assets.s3.amazonaws.com/70/de505d47be7d3a063b51b6f856a6e2/NewCoursera-Logo-800x800.png"
     }
   ];
 

@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import SectionHeader from "../SectionHeader";
 import { Github, Linkedin, Mail, MapPin, Phone, Send } from "lucide-react";
 import { toast } from "sonner";
+import { personalInfo } from "@/config/personalInfo";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -26,39 +27,10 @@ const Contact = () => {
     setIsSubmitting(true);
     
     try {
-      // Create the request for Mailjet API
-      const emailData = {
-        Messages: [
-          {
-            From: {
-              Email: "no-reply@yourwebsite.com",
-              Name: "Portfolio Contact Form"
-            },
-            To: [
-              {
-                Email: "agrawalsrajal2012@gmail.com",
-                Name: "Srajal Agrawal"
-              }
-            ],
-            Subject: `Portfolio Contact: ${formData.subject}`,
-            TextPart: `Name: ${formData.name}\nEmail: ${formData.email}\nMessage: ${formData.message}`,
-            HTMLPart: `
-              <h3>New contact from your portfolio website</h3>
-              <p><strong>Name:</strong> ${formData.name}</p>
-              <p><strong>Email:</strong> ${formData.email}</p>
-              <p><strong>Subject:</strong> ${formData.subject}</p>
-              <p><strong>Message:</strong></p>
-              <p>${formData.message.replace(/\n/g, '<br>')}</p>
-            `
-          }
-        ]
-      };
-
-      // In a real implementation, this would be sent to a backend API
-      // For now, simulate a successful API call
-      console.log("Email data to send:", emailData);
+      // In a real implementation, this would be sent to a Supabase function
+      console.log("Contact form data to send:", formData);
       
-      // Simulate sending email (normally would be handled by a backend endpoint)
+      // Simulate sending data to Supabase
       setTimeout(() => {
         toast.success("Message sent successfully! I'll get back to you soon.");
         setFormData({
@@ -70,7 +42,7 @@ const Contact = () => {
         setIsSubmitting(false);
       }, 1500);
     } catch (error) {
-      console.error("Error sending email:", error);
+      console.error("Error sending message:", error);
       toast.error("Failed to send message. Please try again later.");
       setIsSubmitting(false);
     }
@@ -101,8 +73,8 @@ const Contact = () => {
                 </div>
                 <div>
                   <h4 className="font-medium">Email</h4>
-                  <a href="mailto:agrawalsrajal2012@gmail.com" className="text-muted-foreground hover:text-primary">
-                    agrawalsrajal2012@gmail.com
+                  <a href={`mailto:${personalInfo.email}`} className="text-muted-foreground hover:text-primary">
+                    {personalInfo.email}
                   </a>
                 </div>
               </div>
@@ -113,8 +85,8 @@ const Contact = () => {
                 </div>
                 <div>
                   <h4 className="font-medium">Phone</h4>
-                  <a href="tel:+917869320300" className="text-muted-foreground hover:text-primary">
-                    +91-7869320300
+                  <a href={`tel:${personalInfo.phone}`} className="text-muted-foreground hover:text-primary">
+                    {personalInfo.phone}
                   </a>
                 </div>
               </div>
@@ -126,7 +98,7 @@ const Contact = () => {
                 <div>
                   <h4 className="font-medium">Location</h4>
                   <p className="text-muted-foreground">
-                    Gurugram, Haryana, India
+                    {personalInfo.location}
                   </p>
                 </div>
               </div>
@@ -136,7 +108,7 @@ const Contact = () => {
               <h3 className="text-xl font-bold mb-4">Connect With Me</h3>
               <div className="flex items-center gap-4">
                 <a 
-                  href="https://github.com/Srajalag7" 
+                  href={personalInfo.socialLinks.github} 
                   target="_blank"
                   rel="noopener noreferrer"
                   className="p-3 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white rounded-full transition-colors"
@@ -145,7 +117,7 @@ const Contact = () => {
                   <Github size={20} />
                 </a>
                 <a 
-                  href="https://www.linkedin.com/in/srajalag7/" 
+                  href={personalInfo.socialLinks.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="p-3 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white rounded-full transition-colors"
@@ -154,7 +126,7 @@ const Contact = () => {
                   <Linkedin size={20} />
                 </a>
                 <a 
-                  href="mailto:agrawalsrajal2012@gmail.com" 
+                  href={`mailto:${personalInfo.email}`}
                   className="p-3 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white rounded-full transition-colors"
                   aria-label="Email"
                 >

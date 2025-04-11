@@ -1,7 +1,7 @@
 
-import React from "react";
+import React, { useState } from "react";
 import SectionHeader from "../SectionHeader";
-import { ArrowUpRight, Briefcase } from "lucide-react";
+import { ArrowUpRight, Briefcase, ChevronDown, ChevronUp } from "lucide-react";
 
 interface ExperienceItemProps {
   title: string;
@@ -20,12 +20,16 @@ const ExperienceItem: React.FC<ExperienceItemProps> = ({
   skills,
   category,
 }) => {
+  const [showAllSkills, setShowAllSkills] = useState(false);
   const categoryColors = {
     ai: "border-tech-ai",
     webdev: "border-tech-webdev",
     ml: "border-tech-ml",
     leadership: "border-tech-cloud",
   };
+
+  const visibleSkills = showAllSkills ? skills : skills.slice(0, 8);
+  const hiddenSkillsCount = skills.length - 8;
 
   return (
     <div className={`relative pl-8 pb-12 border-l-2 ${categoryColors[category]}`}>
@@ -60,15 +64,28 @@ const ExperienceItem: React.FC<ExperienceItemProps> = ({
         </ul>
         
         <div className="flex flex-wrap gap-2 pt-2">
-          {skills.slice(0, 8).map((skill, index) => (
+          {visibleSkills.map((skill, index) => (
             <span key={index} className="px-3 py-1 bg-gray-100 dark:bg-gray-800 text-xs font-medium rounded-full">
               {skill}
             </span>
           ))}
           {skills.length > 8 && (
-            <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 text-xs font-medium rounded-full">
-              +{skills.length - 8} more
-            </span>
+            <button 
+              onClick={() => setShowAllSkills(!showAllSkills)}
+              className="px-3 py-1 bg-primary/10 text-primary dark:bg-primary/20 text-xs font-medium rounded-full flex items-center gap-1 hover:bg-primary/20 dark:hover:bg-primary/30 transition-colors"
+            >
+              {showAllSkills ? (
+                <>
+                  <ChevronUp size={14} />
+                  Show Less
+                </>
+              ) : (
+                <>
+                  <ChevronDown size={14} />
+                  +{hiddenSkillsCount} more
+                </>
+              )}
+            </button>
           )}
         </div>
       </div>
@@ -119,7 +136,7 @@ const Experience = () => {
       category: "webdev"
     },
     {
-      title: "QA Automation Engineer",
+      title: "Software Engineer",
       company: "VMock",
       period: "Dec 2022 - May 2023",
       description: [

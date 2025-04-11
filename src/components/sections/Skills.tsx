@@ -1,7 +1,6 @@
 
-import React, { useState } from "react";
+import React from "react";
 import SectionHeader from "../SectionHeader";
-import { ChevronDown, ChevronUp } from "lucide-react";
 
 interface SkillCategoryProps {
   title: string;
@@ -16,10 +15,6 @@ const SkillCategory: React.FC<SkillCategoryProps> = ({
   color, 
   icon 
 }) => {
-  const [expanded, setExpanded] = useState(false);
-  const displaySkills = expanded ? skills : skills.slice(0, 8);
-  const hasMoreSkills = skills.length > 8;
-
   return (
     <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden">
       <div className={`p-4 ${color} text-white`}>
@@ -30,7 +25,7 @@ const SkillCategory: React.FC<SkillCategoryProps> = ({
       </div>
       <div className="p-5">
         <div className="flex flex-wrap gap-2">
-          {displaySkills.map((skill, index) => (
+          {skills.map((skill, index) => (
             <span 
               key={index} 
               className="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-sm font-medium rounded-full my-1"
@@ -38,25 +33,6 @@ const SkillCategory: React.FC<SkillCategoryProps> = ({
               {skill}
             </span>
           ))}
-          
-          {hasMoreSkills && (
-            <button 
-              onClick={() => setExpanded(!expanded)}
-              className="px-3 py-1 bg-primary/10 text-primary dark:bg-primary/20 text-sm font-medium rounded-full my-1 flex items-center gap-1 hover:bg-primary/20 dark:hover:bg-primary/30 transition-colors"
-            >
-              {expanded ? (
-                <>
-                  <ChevronUp size={14} />
-                  Show Less
-                </>
-              ) : (
-                <>
-                  <ChevronDown size={14} />
-                  +{skills.length - 8} more
-                </>
-              )}
-            </button>
-          )}
         </div>
       </div>
     </div>

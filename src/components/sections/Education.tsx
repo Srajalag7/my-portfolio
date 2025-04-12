@@ -236,32 +236,34 @@ const Education = () => {
           subtitle="My academic background and professional certifications."
         />
         
-        <div className="mt-12">
-          <div className="space-y-6">
-            <h3 className="text-2xl font-bold mb-4">Education</h3>
-            {educationItems.map((item, index) => (
-              <EducationItem key={index} {...item} />
-            ))}
-          </div>
-          
-          <div className="space-y-6 mt-12">
-            <h3 className="text-2xl font-bold mb-4">Test Scores</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {testScores.map((score, index) => (
-                <TestScoreItem key={index} {...score} />
+        <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* Left Column: Education and Test Scores */}
+          <div className="space-y-8">
+            <div className="space-y-6">
+              <h3 className="text-2xl font-bold">Education</h3>
+              {educationItems.map((item, index) => (
+                <EducationItem key={index} {...item} />
               ))}
             </div>
+            
+            <div className="space-y-4">
+              <h3 className="text-2xl font-bold">Test Scores</h3>
+              <div className="grid grid-cols-1 gap-4">
+                {testScores.map((score, index) => (
+                  <TestScoreItem key={index} {...score} />
+                ))}
+              </div>
+            </div>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
-            <div className="md:col-span-3">
-              <h3 className="text-2xl font-bold mb-4">Certifications</h3>
+          {/* Right Column: Certifications */}
+          <div className="space-y-6">
+            <h3 className="text-2xl font-bold">Certifications</h3>
+            <div className="space-y-4">
+              {certifications.map((cert, index) => (
+                <CertificationItem key={index} {...cert} />
+              ))}
             </div>
-            {certifications.map((cert, index) => (
-              <div key={index} className="md:col-span-1">
-                <CertificationItem {...cert} />
-              </div>
-            ))}
           </div>
         </div>
       </div>

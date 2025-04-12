@@ -2,8 +2,10 @@
 import React, { useState } from "react";
 import SectionHeader from "../SectionHeader";
 import { Github, Linkedin, Mail, MapPin, Phone, Send } from "lucide-react";
-import { toast } from "sonner";
+import { toast } from "@/hooks/use-toast";
 import { personalInfo } from "@/config/personalInfo";
+import { supabase } from "@/integrations/supabase/client";
+import { siteConfig } from "@/config/siteConfig";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -27,23 +29,54 @@ const Contact = () => {
     setIsSubmitting(true);
     
     try {
-      // In a real implementation, this would be sent to a Supabase function
-      console.log("Contact form data to send:", formData);
-      
-      // Simulate sending data to Supabase
-      setTimeout(() => {
-        toast.success("Message sent successfully! I'll get back to you soon.");
-        setFormData({
-          name: "",
-          email: "",
-          subject: "",
-          message: ""
+      // Save submission to Supabase
+      const { error: supabaseError } = await supabase
+        .from(siteConfig.supabase.contactTable)
+        .insert({
+          [siteConfig.supabase.columns.name]: formData.name,
+          [siteConfig.supabase.columns.email]: formData.email,
+          [siteConfig.supabase.columns.message]: formData.message,
         });
-        setIsSubmitting(false);
-      }, 1500);
+
+      if (supabaseError) throw supabaseError;
+      
+      // Call the send-email function
+      const response = await fetch(`https://bpnwdudavaimtnpjjrzq.supabase.co/functions/v1/send-email`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject,
+          message: formData.message
+        }),
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to send email');
+      }
+
+      toast({
+        title: "Message sent successfully!",
+        description: "I'll get back to you soon.",
+        variant: "default",
+      });
+      
+      setFormData({
+        name: "",
+        email: "",
+        subject: "",
+        message: ""
+      });
     } catch (error) {
-      console.error("Error sending message:", error);
-      toast.error("Failed to send message. Please try again later.");
+      toast({
+        title: "Failed to send message",
+        description: "Please try again later.",
+        variant: "destructive",
+      });
+    } finally {
       setIsSubmitting(false);
     }
   };
@@ -54,7 +87,6 @@ const Contact = () => {
         <SectionHeader 
           title="Get In Touch" 
           subtitle="Interested in working together? Feel free to reach out to me using the form below."
-          align="center"
         />
         
         <div className="grid md:grid-cols-3 gap-10 mt-12">

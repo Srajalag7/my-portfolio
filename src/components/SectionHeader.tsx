@@ -1,3 +1,4 @@
+
 import React from "react";
 interface SectionHeaderProps {
   title: string;
@@ -10,7 +11,7 @@ const SectionHeader: React.FC<SectionHeaderProps> = ({
   align = "left"
 }) => {
   const alignClass = align === "center" ? "text-center" : "";
-  return <div className="">
+  return <div className={alignClass}>
       <h2 className="text-3xl md:text-4xl font-bold mb-3 relative inline-block">
         {title}
         <span className="absolute -bottom-1 left-0 w-2/3 h-1 bg-primary rounded-full"></span>

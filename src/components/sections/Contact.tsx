@@ -1,11 +1,9 @@
-
 import React, { useState } from "react";
 import SectionHeader from "../SectionHeader";
 import { Github, Linkedin, Mail, MapPin, Phone, Send } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { personalInfo } from "@/config/personalInfo";
 import { supabase } from "@/integrations/supabase/client";
-import { siteConfig } from "@/config/siteConfig";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -31,11 +29,11 @@ const Contact = () => {
     try {
       // Save submission to Supabase
       const { error: supabaseError } = await supabase
-        .from(siteConfig.supabase.contactTable)
+        .from('contact_submissions')
         .insert({
-          [siteConfig.supabase.columns.name]: formData.name,
-          [siteConfig.supabase.columns.email]: formData.email,
-          [siteConfig.supabase.columns.message]: formData.message,
+          name: formData.name,
+          email: formData.email,
+          message: formData.message
         });
 
       if (supabaseError) throw supabaseError;

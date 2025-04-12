@@ -9,12 +9,11 @@
 export const personalInfo = {
   name: "Srajal Agrawal",
   title: "GenAI Engineer & Full-Stack Developer",
-  subtitle: "2.5+ Years Experience",
   phone: "+91-7869320300",
   email: "agrawalsrajal2012@gmail.com",
   location: "Gurugram, Haryana, India",
   resumeLink: "https://drive.google.com/file/d/1jlRmSoPs5i5r-2YLEe5z9IEiZQNC5HOq/view?usp=drive_link",
-  profileImage: "https://drive.google.com/uc?export=view&id=1RThdnbQiih90NyXFzrwW-nyhbz8zkmi3",
+  profileImage: "/assets/profile.png",
   socialLinks: {
     github: "https://github.com/Srajalag7",
     linkedin: "https://www.linkedin.com/in/srajalag7/",

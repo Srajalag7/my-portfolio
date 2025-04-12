@@ -68,7 +68,7 @@ const About = () => {
                     <Briefcase size={24} />
                   </div>
                   <div>
-                    <h4 className="font-medium text-lg">2+ Years Experience</h4>
+                    <h4 className="font-medium text-lg">2.5+ Years Experience</h4>
                     <p className="text-muted-foreground">Working with enterprise clients building AI systems</p>
                   </div>
                 </div>

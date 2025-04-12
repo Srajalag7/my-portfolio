@@ -76,7 +76,7 @@ const Hero = () => {
           <div className="order-1 md:order-2 flex justify-center">
             <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-white dark:border-gray-800 shadow-xl animate-fade-in">
               <img 
-                src="/lovable-uploads/0a084d41-8817-41f8-84ea-4d2f8e2c7156.png" 
+                src={personalInfo.profileImage} 
                 alt={personalInfo.name} 
                 className="w-full h-full object-cover"
               />

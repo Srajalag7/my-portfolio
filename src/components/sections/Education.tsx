@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import SectionHeader from "../SectionHeader";
 import { Award, ChevronDown, ChevronUp, GraduationCap } from "lucide-react";
@@ -164,7 +165,6 @@ const Education = () => {
       institution: "Indian Institute of Technology, Kanpur",
       degree: "Bachelor of Technology, Mechanical Engineering",
       period: "2018 - 2022",
-      skills: ["Mechanical Engineering"],
       location: "Kanpur, Uttar Pradesh, India"
     },
     {
@@ -177,7 +177,7 @@ const Education = () => {
       institution: "St. Claret School",
       degree: "ICSE | Secondary School",
       period: "2006 - 2015",
-      location: "India"
+      location: "Satna, Madhya Pradesh, India"
     }
   ];
 
@@ -236,32 +236,32 @@ const Education = () => {
           subtitle="My academic background and professional certifications."
         />
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
-          <div className="md:col-span-2 space-y-6">
+        <div className="mt-12">
+          <div className="space-y-6">
             <h3 className="text-2xl font-bold mb-4">Education</h3>
             {educationItems.map((item, index) => (
               <EducationItem key={index} {...item} />
             ))}
           </div>
           
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-2xl font-bold mb-4">Test Scores</h3>
-              <div className="space-y-4">
-                {testScores.map((score, index) => (
-                  <TestScoreItem key={index} {...score} />
-                ))}
-              </div>
+          <div className="space-y-6 mt-12">
+            <h3 className="text-2xl font-bold mb-4">Test Scores</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {testScores.map((score, index) => (
+                <TestScoreItem key={index} {...score} />
+              ))}
             </div>
-            
-            <div>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
+            <div className="md:col-span-3">
               <h3 className="text-2xl font-bold mb-4">Certifications</h3>
-              <div className="space-y-4">
-                {certifications.map((cert, index) => (
-                  <CertificationItem key={index} {...cert} />
-                ))}
-              </div>
             </div>
+            {certifications.map((cert, index) => (
+              <div key={index} className="md:col-span-1">
+                <CertificationItem {...cert} />
+              </div>
+            ))}
           </div>
         </div>
       </div>

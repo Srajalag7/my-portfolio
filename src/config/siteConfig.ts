@@ -1,0 +1,32 @@
+
+/**
+ * Site Configuration
+ * 
+ * Central configuration for site settings, integrations, and analytics
+ */
+
+export const siteConfig = {
+  // Supabase Configuration
+  supabase: {
+    contactTable: "contact_submissions",
+    columns: {
+      name: "name",
+      email: "email",
+      message: "message",
+      createdAt: "created_at"
+    }
+  },
+  
+  // Analytics Configuration
+  analytics: {
+    // LocalStorage key for page view data
+    pageViewsStorageKey: "pageViewData",
+    
+    // Developer console functions
+    consoleFunctions: {
+      viewStats: "viewSiteStats",
+      viewSubmissions: "viewContactSubmissions"
+    }
+  }
+};
+

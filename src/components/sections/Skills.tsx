@@ -78,7 +78,7 @@ const Skills = () => {
           />
           
           <SkillCategory
-            title="Web Development"
+            title="Full-Stack Development"
             color="bg-tech-webdev"
             icon={
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -152,8 +152,7 @@ const Skills = () => {
               "Database Queries",
               "Knowledge Discovery",
               "Credit Risk Management",
-              "Data Mining",
-              "Mechanical Engineering"
+              "Data Mining"
             ]}
           />
         </div>

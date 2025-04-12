@@ -4,6 +4,7 @@ import Nav from "./Nav";
 import Footer from "./Footer";
 import { ThemeProvider } from "@/hooks/use-theme";
 import { usePageTracker } from "@/hooks/use-page-tracker";
+import { siteConfig } from "@/config/siteConfig";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -15,7 +16,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   
   useEffect(() => {
     // Add developer helper functions to window object
-    (window as any).viewSiteStats = () => {
+    (window as any)[siteConfig.analytics.consoleFunctions.viewStats] = () => {
       const pageViews = (window as any).getPageViewStats();
       console.group('Site Statistics:');
       console.log('Total Page Views:', pageViews.totalViews);
@@ -28,13 +29,13 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     };
     
     // Create a function to get contact form submissions (from Supabase)
-    (window as any).viewContactSubmissions = () => {
+    (window as any)[siteConfig.analytics.consoleFunctions.viewSubmissions] = () => {
       console.log('To view contact form submissions:');
-      console.log('1. Log into your Supabase dashboard');
-      console.log('2. Go to the "Table Editor" and check the "contact_submissions" table');
+      console.log(`1. Log into your Supabase dashboard`);
+      console.log(`2. Go to the "Table Editor" and check the "${siteConfig.supabase.contactTable}" table`);
       console.log('3. You can see all submissions with details like name, email, message, etc.');
       
-      return 'To view contact form submissions, check your Supabase dashboard "contact_submissions" table';
+      return `To view contact form submissions, check your Supabase dashboard "${siteConfig.supabase.contactTable}" table`;
     };
   }, []);
   

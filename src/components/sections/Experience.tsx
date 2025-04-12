@@ -1,7 +1,7 @@
 
 import React, { useState } from "react";
 import SectionHeader from "../SectionHeader";
-import { Briefcase, ChevronDown, ChevronUp, Circle } from "lucide-react";
+import { Briefcase, ChevronDown, ChevronUp, ArrowUpRight } from "lucide-react";
 
 interface ExperienceItemProps {
   title: string;
@@ -55,11 +55,9 @@ const ExperienceItem: React.FC<ExperienceItemProps> = ({
       <div className="space-y-4">
         <div className="flex items-start justify-between">
           <div>
-            <div className="flex flex-col md:flex-row md:items-baseline md:gap-2">
-              <h3 className="text-xl font-semibold">{title}</h3>
-              <p className="text-sm text-muted-foreground">{period}</p>
-            </div>
+            <h3 className="text-xl font-semibold">{title}</h3>
             <p className="text-lg font-medium text-primary">{company}{location ? ` | ${location}` : ""}</p>
+            <p className="text-sm text-muted-foreground">{period}</p>
           </div>
           <div className="hidden md:block">
             <span className={`tech-tag ${
@@ -83,7 +81,7 @@ const ExperienceItem: React.FC<ExperienceItemProps> = ({
                 <ul className="space-y-2 text-gray-700 dark:text-gray-300">
                   {section.items.map((item, index) => (
                     <li key={index} className="flex items-start">
-                      <Circle className="min-w-[8px] h-2 mt-2 mr-3 text-primary fill-primary" />
+                      <ArrowUpRight className="min-w-[14px] h-3.5 mt-1.5 mr-3 text-primary" />
                       <span>{item}</span>
                     </li>
                   ))}
@@ -95,7 +93,7 @@ const ExperienceItem: React.FC<ExperienceItemProps> = ({
           <ul className="space-y-2 text-gray-700 dark:text-gray-300">
             {description.map((item, index) => (
               <li key={index} className="flex items-start">
-                <Circle className="min-w-[8px] h-2 mt-2 mr-3 text-primary fill-primary" />
+                <ArrowUpRight className="min-w-[14px] h-3.5 mt-1.5 mr-3 text-primary" />
                 <span>{item}</span>
               </li>
             ))}
@@ -135,7 +133,7 @@ const ExperienceItem: React.FC<ExperienceItemProps> = ({
 const Experience = () => {
   const experiences: ExperienceItemProps[] = [
     {
-      title: "Resume ChatBot | SDE-II",
+      title: "Resume ChatBot",
       company: "VMock India Pvt Ltd",
       location: "Gurugram, India",
       period: "Jan 2025 - Mar 2025",
@@ -155,7 +153,7 @@ const Experience = () => {
       ]
     },
     {
-      title: "GenAI Resume Parser | SDE-II",
+      title: "GenAI Resume Parser",
       company: "VMock India Pvt Ltd",
       location: "Gurugram, India",
       period: "Jun 2024 - Dec 2024",
@@ -175,7 +173,7 @@ const Experience = () => {
       ]
     },
     {
-      title: "Admin Dashboard | SDE-I",
+      title: "Admin Dashboard",
       company: "VMock India Pvt Ltd",
       location: "Gurugram, India",
       period: "Jun 2023 - May 2024",
@@ -203,13 +201,13 @@ const Experience = () => {
       ]
     },
     {
-      title: "QA Automation Platform | SDE-I",
+      title: "QA Automation Platform",
       company: "VMock India Pvt Ltd",
       location: "Gurugram, India",
       period: "Dec 2022 - May 2023",
       description: [],
       skills: ["Codeception", "CI/CD", "QA Automation", "PHP", "Amazon S3", "AWS", "Git", "Quality Assurance", "Kubernetes", "Leadership", "Test Automation", "Software Development", "Gherkin", "Amazon EKS", "DevOps", "Microservices", "SQL"],
-      category: "fullstack",
+      category: "backend",
       subSections: [
         {
           title: "",

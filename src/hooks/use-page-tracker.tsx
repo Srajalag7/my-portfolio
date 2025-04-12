@@ -1,5 +1,6 @@
 
 import { useEffect } from 'react';
+import { siteConfig } from '@/config/siteConfig';
 
 type PageViewData = {
   path: string;
@@ -14,7 +15,7 @@ export const usePageTracker = () => {
     const trackPageView = () => {
       try {
         // Get current data from localStorage or initialize an empty array
-        const existingData = localStorage.getItem('pageViewData');
+        const existingData = localStorage.getItem(siteConfig.analytics.pageViewsStorageKey);
         const viewsData: PageViewData[] = existingData ? JSON.parse(existingData) : [];
         
         // Create new page view entry
@@ -27,20 +28,16 @@ export const usePageTracker = () => {
         
         // Add the new entry and save to localStorage
         viewsData.push(newView);
-        localStorage.setItem('pageViewData', JSON.stringify(viewsData));
-        
-        // Log for debugging
-        console.log('Page view tracked:', newView);
-        console.log('Total views:', viewsData.length);
+        localStorage.setItem(siteConfig.analytics.pageViewsStorageKey, JSON.stringify(viewsData));
         
         // Add to window object for easy access
         (window as any).getPageViews = () => {
-          const data = localStorage.getItem('pageViewData');
+          const data = localStorage.getItem(siteConfig.analytics.pageViewsStorageKey);
           return data ? JSON.parse(data) : [];
         };
         
         (window as any).getPageViewStats = () => {
-          const data = localStorage.getItem('pageViewData');
+          const data = localStorage.getItem(siteConfig.analytics.pageViewsStorageKey);
           const views = data ? JSON.parse(data) as PageViewData[] : [];
           
           if (views.length === 0) return { totalViews: 0, pathBreakdown: {} };
@@ -61,7 +58,7 @@ export const usePageTracker = () => {
           };
         };
       } catch (error) {
-        console.error('Error tracking page view:', error);
+        // Silent error handling
       }
     };
 

@@ -9,12 +9,15 @@ const PORTFOLIO_EMAIL = Deno.env.get("PORTFOLIO_EMAIL") || "";
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
+  "Access-Control-Max-Age": "86400",
 };
 
 serve(async (req) => {
   // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
     return new Response(null, {
+      status: 204,
       headers: corsHeaders,
     });
   }
@@ -93,6 +96,8 @@ serve(async (req) => {
       }
     );
   } catch (error) {
+    console.error("Error in send-email function:", error);
+    
     return new Response(
       JSON.stringify({ success: false, error: error.message }),
       {

@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import SectionHeader from "../SectionHeader";
 import { Award, ChevronDown, ChevronUp, GraduationCap } from "lucide-react";
@@ -236,9 +235,8 @@ const Education = () => {
           subtitle="My academic background and professional certifications."
         />
         
-        <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Left Column: Education and Test Scores */}
-          <div className="space-y-8">
+        <div className="mt-12 grid grid-cols-1 lg:grid-cols-10 gap-8">
+          <div className="lg:col-span-7 space-y-8">
             <div className="space-y-6">
               <h3 className="text-2xl font-bold">Education</h3>
               {educationItems.map((item, index) => (
@@ -256,8 +254,7 @@ const Education = () => {
             </div>
           </div>
           
-          {/* Right Column: Certifications */}
-          <div className="space-y-6">
+          <div className="lg:col-span-3 space-y-6">
             <h3 className="text-2xl font-bold">Certifications</h3>
             <div className="space-y-4">
               {certifications.map((cert, index) => (

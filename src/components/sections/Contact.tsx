@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import SectionHeader from "../SectionHeader";
 import { Github, Linkedin, Mail, MapPin, Phone, Send } from "lucide-react";
@@ -53,7 +54,8 @@ const Contact = () => {
       });
       
       if (!response.ok) {
-        throw new Error('Failed to send email');
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to send email');
       }
 
       toast({
@@ -69,6 +71,7 @@ const Contact = () => {
         message: ""
       });
     } catch (error) {
+      console.error("Contact form error:", error);
       toast({
         title: "Failed to send message",
         description: "Please try again later.",

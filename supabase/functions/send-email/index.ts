@@ -14,8 +14,11 @@ const corsHeaders = {
 };
 
 serve(async (req) => {
+  console.log("Received request to send-email function");
+  
   // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
+    console.log("Handling OPTIONS request for CORS preflight");
     return new Response(null, {
       status: 204,
       headers: corsHeaders,
@@ -24,6 +27,7 @@ serve(async (req) => {
 
   try {
     const { name, email, message, subject } = await req.json();
+    console.log(`Processing email request for ${name} (${email})`);
 
     // Initialize Mailjet client
     const mailjet = new Client({
@@ -32,6 +36,7 @@ serve(async (req) => {
     });
 
     // Send email to the visitor
+    console.log("Sending confirmation email to visitor");
     const visitorResponse = await mailjet.sendEmail({
       Messages: [
         {
@@ -56,8 +61,10 @@ serve(async (req) => {
         },
       ],
     });
+    console.log("Visitor email sent successfully");
 
     // Send notification email to portfolio owner
+    console.log("Sending notification email to portfolio owner");
     const ownerResponse = await mailjet.sendEmail({
       Messages: [
         {
@@ -83,6 +90,7 @@ serve(async (req) => {
         },
       ],
     });
+    console.log("Owner notification email sent successfully");
 
     return new Response(
       JSON.stringify({ 

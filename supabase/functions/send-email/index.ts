@@ -1,4 +1,3 @@
-
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { corsHeaders } from '../_shared/cors.ts';
 
@@ -11,7 +10,7 @@ const createUserEmailTemplate = (name: string, message: string, siteOwner: strin
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Your message has been received</title>
+  <title>Thank you for contacting</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -52,7 +51,7 @@ const createUserEmailTemplate = (name: string, message: string, siteOwner: strin
     </div>
     <div class="content">
       <p>Hello ${name},</p>
-      <p>Thank you for contacting me through my portfolio website. I've received your message and will get back to you as soon as possible.</p>
+      <p>Thank you for contacting. I've received your message and will get back to you as soon as possible.</p>
       <p><strong>Your message:</strong></p>
       <p style="padding: 10px; background-color: #f9f9f9; border-left: 4px solid #4F46E5;">${message}</p>
       <p>Best regards,<br>${siteOwner}</p>
@@ -71,7 +70,7 @@ const createOwnerEmailTemplate = (name: string, email: string, subject: string, 
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>New Portfolio Contact Submission</title>
+  <title>You have received a new message from your website</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -123,7 +122,7 @@ const createOwnerEmailTemplate = (name: string, email: string, subject: string, 
       <h1>New Contact Form Submission</h1>
     </div>
     <div class="content">
-      <p>You have received a new message from your portfolio website:</p>
+      <p>You have received a new message from your website:</p>
       
       <div class="contact-info">
         <p><strong>Name:</strong> ${name}</p>

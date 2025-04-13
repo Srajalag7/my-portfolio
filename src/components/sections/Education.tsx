@@ -5,51 +5,72 @@ import EducationItem from "./education/EducationItem";
 import CertificationItem from "./education/CertificationItem";
 import TestScoreItem from "./education/TestScoreItem";
 
-const educationData = [
+const educationItems = [
   {
-    institution: "University of Waterloo",
-    degree: "Bachelor of Computer Science",
-    period: "2021 - Present",
-    description:
-      "Currently pursuing a Bachelor of Computer Science with a focus on software engineering and artificial intelligence. GPA: 3.9/4.0",
+    institution: "Indian Institute of Technology, Kanpur",
+    degree: "Bachelor of Technology, Mechanical Engineering",
+    period: "2018 - 2022",
+    location: "Kanpur, Uttar Pradesh, India"
   },
   {
-    institution: "Harvard University",
-    degree: "CS50 - Introduction to Computer Science",
-    period: "2020",
-    description:
-      "Completed Harvard University's CS50, an introductory computer science course, covering topics such as algorithms, data structures, and web development.",
+    institution: "Nalanda Public Hr. Sec. School",
+    degree: "High School",
+    period: "2015 - 2017",
+    location: "Satna, Madhya Pradesh, India"
   },
+  {
+    institution: "St. Claret School",
+    degree: "ICSE | Secondary School",
+    period: "2006 - 2015",
+    location: "Satna, Madhya Pradesh, India"
+  }
 ];
 
-const certificationData = [
+const testScores = [
   {
-    title: "AWS Certified Cloud Practitioner",
-    issuer: "Amazon Web Services",
-    date: "2023",
-    credentialId: "AWS-123456",
-    skills: ["AWS", "Cloud Computing", "DevOps"],
+    title: "JEE Advanced",
+    score: "Score: 1470 Rank",
+    date: "Jan 2018"
   },
   {
-    title: "Google Data Analytics Professional Certificate",
-    issuer: "Google via Coursera",
-    date: "2022",
-    credentialId: "GDAPC-789012",
-    skills: ["Data Analysis", "SQL", "Tableau", "R Programming"],
-  },
+    title: "JEE Mains",
+    score: "Score: 5943 Rank",
+    date: "Jan 2018"
+  }
 ];
 
-const testScoreData = [
+const certifications = [
   {
-    title: "SAT",
-    score: "1580/1600",
-    date: "May 2021",
+    title: "Neural Networks and Deep Learning",
+    issuer: "Coursera",
+    date: "Jun 2021",
+    credentialId: "66FSB6L6HNDD",
+    skills: [
+      "Natural Language Processing (NLP)", 
+      "Machine Learning", 
+      "Neural Networks", 
+      "Python", 
+      "Deep Learning", 
+      "Convolutional Neural Networks (CNN)"
+    ],
+    logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Coursera-Logo_600x600.svg/1200px-Coursera-Logo_600x600.svg.png"
   },
   {
-    title: "ACT",
-    score: "35/36",
-    date: "April 2021",
+    title: "Programming for Everybody (Getting Started with Python)",
+    issuer: "Coursera",
+    date: "Jul 2020",
+    credentialId: "GD9RSEPZ578N",
+    skills: ["Python"],
+    logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Coursera-Logo_600x600.svg/1200px-Coursera-Logo_600x600.svg.png"
   },
+  {
+    title: "Python Data Structures",
+    issuer: "Coursera",
+    date: "Jul 2020",
+    credentialId: "AYWEVFLYXDZZ",
+    skills: ["Python"],
+    logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Coursera-Logo_600x600.svg/1200px-Coursera-Logo_600x600.svg.png"
+  }
 ];
 
 const Education = () => {
@@ -65,18 +86,19 @@ const Education = () => {
           {/* Education column - 60% width */}
           <div className="md:col-span-3 space-y-6">
             <h3 className="text-xl font-bold mb-4">Academic Education</h3>
-            {educationData.map((item, index) => (
+            {educationItems.map((item, index) => (
               <EducationItem
                 key={index}
                 institution={item.institution}
                 degree={item.degree}
                 period={item.period}
+                location={item.location}
               />
             ))}
             
             <h3 className="text-xl font-bold mb-4 mt-8">Test Scores</h3>
             <div className="grid md:grid-cols-2 gap-4">
-              {testScoreData.map((item, index) => (
+              {testScores.map((item, index) => (
                 <TestScoreItem
                   key={index}
                   title={item.title}
@@ -90,7 +112,7 @@ const Education = () => {
           {/* Certifications column - 40% width */}
           <div className="md:col-span-2 space-y-6">
             <h3 className="text-xl font-bold mb-4">Certifications</h3>
-            {certificationData.map((cert, index) => (
+            {certifications.map((cert, index) => (
               <CertificationItem
                 key={index}
                 title={cert.title}
@@ -98,6 +120,7 @@ const Education = () => {
                 date={cert.date}
                 credentialId={cert.credentialId}
                 skills={cert.skills}
+                logo={cert.logo}
               />
             ))}
           </div>

@@ -1,9 +1,8 @@
 
 import { serve } from "https://deno.land/std@0.177.0/http/server.ts";
-import { Client } from "https://deno.land/x/mailjet@v0.1.0/mod.ts";
+import { Resend } from "npm:resend@2.0.0";
 
-const MAILJET_API_KEY = Deno.env.get("MAILJET_API_KEY") || "";
-const MAILJET_SECRET_KEY = Deno.env.get("MAILJET_SECRET_KEY") || "";
+const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY") || "";
 const PORTFOLIO_EMAIL = Deno.env.get("PORTFOLIO_EMAIL") || "";
 
 const corsHeaders = {
@@ -13,12 +12,11 @@ const corsHeaders = {
   "Access-Control-Max-Age": "86400",
 };
 
+const resend = new Resend(RESEND_API_KEY);
+
 serve(async (req) => {
-  console.log("Received request to send-email function");
-  
   // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
-    console.log("Handling OPTIONS request for CORS preflight");
     return new Response(null, {
       status: 204,
       headers: corsHeaders,
@@ -27,70 +25,164 @@ serve(async (req) => {
 
   try {
     const { name, email, message, subject } = await req.json();
-    console.log(`Processing email request for ${name} (${email})`);
 
-    // Initialize Mailjet client
-    const mailjet = new Client({
-      apiKey: MAILJET_API_KEY,
-      apiSecret: MAILJET_SECRET_KEY,
+    // Send confirmation email to visitor
+    const visitorResponse = await resend.emails.send({
+      from: `Portfolio <${PORTFOLIO_EMAIL}>`,
+      to: [email],
+      subject: "Thank you for your message",
+      html: `
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <title>Thank you for your message</title>
+          <style>
+            body {
+              font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+              line-height: 1.6;
+              color: #333;
+              max-width: 600px;
+              margin: 0 auto;
+              padding: 20px;
+            }
+            .email-container {
+              border: 1px solid #e0e0e0;
+              border-radius: 8px;
+              padding: 20px;
+              background-color: #ffffff;
+            }
+            .header {
+              text-align: center;
+              padding-bottom: 20px;
+              border-bottom: 1px solid #e0e0e0;
+              margin-bottom: 20px;
+            }
+            .header h2 {
+              color: #4f46e5;
+              margin: 0;
+            }
+            .content {
+              padding: 20px 0;
+            }
+            .footer {
+              text-align: center;
+              padding-top: 20px;
+              border-top: 1px solid #e0e0e0;
+              margin-top: 20px;
+              color: #666;
+              font-size: 14px;
+            }
+          </style>
+        </head>
+        <body>
+          <div class="email-container">
+            <div class="header">
+              <h2>Thank You for Reaching Out</h2>
+            </div>
+            <div class="content">
+              <p>Dear ${name},</p>
+              <p>Thank you for contacting me. I've received your message and will get back to you as soon as possible.</p>
+              <p>Here's a confirmation of what you sent:</p>
+              <p><strong>Subject:</strong> ${subject}</p>
+              <p><strong>Message:</strong> ${message}</p>
+            </div>
+            <div class="footer">
+              <p>Best regards,</p>
+              <p>Portfolio Owner</p>
+            </div>
+          </div>
+        </body>
+        </html>
+      `,
     });
-
-    // Send email to the visitor
-    console.log("Sending confirmation email to visitor");
-    const visitorResponse = await mailjet.sendEmail({
-      Messages: [
-        {
-          From: {
-            Email: PORTFOLIO_EMAIL,
-            Name: "Portfolio Website",
-          },
-          To: [
-            {
-              Email: email,
-              Name: name,
-            },
-          ],
-          Subject: "Thank you for your message",
-          TextPart: `Dear ${name},\n\nThank you for reaching out. I have received your message and will get back to you as soon as possible.\n\nBest regards,`,
-          HTMLPart: `
-            <h3>Thank you for your message</h3>
-            <p>Dear ${name},</p>
-            <p>Thank you for reaching out. I have received your message and will get back to you as soon as possible.</p>
-            <p>Best regards,</p>
-          `,
-        },
-      ],
-    });
-    console.log("Visitor email sent successfully");
 
     // Send notification email to portfolio owner
-    console.log("Sending notification email to portfolio owner");
-    const ownerResponse = await mailjet.sendEmail({
-      Messages: [
-        {
-          From: {
-            Email: PORTFOLIO_EMAIL,
-            Name: "Portfolio Website",
-          },
-          To: [
-            {
-              Email: PORTFOLIO_EMAIL,
-              Name: "Portfolio Owner",
-            },
-          ],
-          Subject: `New Contact Form Submission: ${subject}`,
-          TextPart: `New message from ${name} (${email}):\n\n${message}`,
-          HTMLPart: `
-            <h3>New Contact Form Submission</h3>
-            <p><strong>From:</strong> ${name} (${email})</p>
-            <p><strong>Subject:</strong> ${subject}</p>
-            <p><strong>Message:</strong></p>
-            <p>${message.replace(/\n/g, '<br>')}</p>
-          `,
-        },
-      ],
+    const ownerResponse = await resend.emails.send({
+      from: `Portfolio Contact <${PORTFOLIO_EMAIL}>`,
+      to: [PORTFOLIO_EMAIL],
+      subject: `New Contact Form Submission: ${subject}`,
+      html: `
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <title>New Contact Form Submission</title>
+          <style>
+            body {
+              font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+              line-height: 1.6;
+              color: #333;
+              max-width: 600px;
+              margin: 0 auto;
+              padding: 20px;
+            }
+            .email-container {
+              border: 1px solid #e0e0e0;
+              border-radius: 8px;
+              padding: 20px;
+              background-color: #ffffff;
+            }
+            .header {
+              padding-bottom: 20px;
+              border-bottom: 1px solid #e0e0e0;
+              margin-bottom: 20px;
+            }
+            .header h2 {
+              color: #4f46e5;
+              margin: 0;
+            }
+            .content {
+              padding: 20px 0;
+            }
+            .message-box {
+              background-color: #f9f9f9;
+              padding: 15px;
+              border-radius: 6px;
+              margin-top: 10px;
+              border-left: 4px solid #4f46e5;
+            }
+            .contact-details {
+              margin-top: 20px;
+              background-color: #f0f4ff;
+              padding: 15px;
+              border-radius: 6px;
+            }
+            .footer {
+              text-align: center;
+              padding-top: 20px;
+              border-top: 1px solid #e0e0e0;
+              margin-top: 20px;
+              color: #666;
+              font-size: 14px;
+            }
+          </style>
+        </head>
+        <body>
+          <div class="email-container">
+            <div class="header">
+              <h2>New Contact Form Submission</h2>
+            </div>
+            <div class="content">
+              <div class="contact-details">
+                <p><strong>From:</strong> ${name} (${email})</p>
+                <p><strong>Subject:</strong> ${subject}</p>
+              </div>
+              <p><strong>Message:</strong></p>
+              <div class="message-box">
+                ${message.replace(/\n/g, '<br>')}
+              </div>
+            </div>
+            <div class="footer">
+              <p>This message was sent from your portfolio contact form.</p>
+            </div>
+          </div>
+        </body>
+        </html>
+      `,
     });
-    console.log("Owner notification email sent successfully");
 
     return new Response(
       JSON.stringify({ 
@@ -104,8 +196,6 @@ serve(async (req) => {
       }
     );
   } catch (error) {
-    console.error("Error in send-email function:", error);
-    
     return new Response(
       JSON.stringify({ success: false, error: error.message }),
       {

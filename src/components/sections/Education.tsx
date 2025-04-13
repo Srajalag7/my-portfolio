@@ -236,7 +236,7 @@ const Education = () => {
         />
         
         <div className="mt-12 grid grid-cols-1 lg:grid-cols-10 gap-8">
-          <div className="lg:col-span-7 space-y-8">
+          <div className="lg:col-span-6 space-y-8">
             <div className="space-y-6">
               <h3 className="text-2xl font-bold">Education</h3>
               {educationItems.map((item, index) => (
@@ -254,7 +254,7 @@ const Education = () => {
             </div>
           </div>
           
-          <div className="lg:col-span-3 space-y-6">
+          <div className="lg:col-span-4 space-y-6">
             <h3 className="text-2xl font-bold">Certifications</h3>
             <div className="space-y-4">
               {certifications.map((cert, index) => (

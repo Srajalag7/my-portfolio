@@ -25,7 +25,7 @@ export const usePageTracker = () => {
         try {
           // Try to save to Supabase
           const { error } = await supabase
-            .from('page_visits')
+            .from(siteConfig.supabase.visitsTable)
             .insert({
               path,
               referrer,
@@ -58,12 +58,12 @@ export const usePageTracker = () => {
         
         // Add to window object for easy access
         (window as any).getPageViews = () => {
-          return supabase.from('page_visits').select('*');
+          return supabase.from(siteConfig.supabase.visitsTable).select('*');
         };
         
         (window as any).getPageViewStats = async () => {
           try {
-            const { data, error } = await supabase.from('page_visits').select('*');
+            const { data, error } = await supabase.from(siteConfig.supabase.visitsTable).select('*');
             
             if (error) throw error;
             

@@ -1,213 +1,248 @@
 
-import { serve } from "https://deno.land/std@0.177.0/http/server.ts";
-import { Resend } from "npm:resend@2.0.0";
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
+import { corsHeaders } from '../_shared/cors.ts';
 
-const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY") || "";
-const PORTFOLIO_EMAIL = Deno.env.get("PORTFOLIO_EMAIL") || "";
+const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY');
+const PORTFOLIO_EMAIL = Deno.env.get('PORTFOLIO_EMAIL');
 
-const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
-  "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
-  "Access-Control-Max-Age": "86400",
-};
+const createUserEmailTemplate = (name: string, message: string, siteOwner: string) => `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your message has been received</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      color: #333333;
+      text-align: left;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .header {
+      background-color: #4F46E5;
+      padding: 20px;
+      text-align: center;
+      color: white;
+    }
+    .content {
+      padding: 20px;
+      background-color: #ffffff;
+      border: 1px solid #eeeeee;
+    }
+    .footer {
+      text-align: center;
+      padding: 10px;
+      font-size: 12px;
+      color: #888888;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Thank You for Your Message</h1>
+    </div>
+    <div class="content">
+      <p>Hello ${name},</p>
+      <p>Thank you for contacting me through my portfolio website. I've received your message and will get back to you as soon as possible.</p>
+      <p><strong>Your message:</strong></p>
+      <p style="padding: 10px; background-color: #f9f9f9; border-left: 4px solid #4F46E5;">${message}</p>
+      <p>Best regards,<br>${siteOwner}</p>
+    </div>
+    <div class="footer">
+      <p>This is an automated message. Please do not reply to this email.</p>
+    </div>
+  </div>
+</body>
+</html>
+`;
 
-const resend = new Resend(RESEND_API_KEY);
+const createOwnerEmailTemplate = (name: string, email: string, subject: string, message: string) => `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New Portfolio Contact Submission</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      color: #333333;
+      text-align: left;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .header {
+      background-color: #4F46E5;
+      padding: 20px;
+      text-align: center;
+      color: white;
+    }
+    .content {
+      padding: 20px;
+      background-color: #ffffff;
+      border: 1px solid #eeeeee;
+    }
+    .footer {
+      text-align: center;
+      padding: 10px;
+      font-size: 12px;
+      color: #888888;
+    }
+    .contact-info {
+      background-color: #f9f9f9;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 4px;
+    }
+    .message-content {
+      padding: 15px;
+      background-color: #f9f9f9;
+      border-left: 4px solid #4F46E5;
+      margin-top: 15px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>New Contact Form Submission</h1>
+    </div>
+    <div class="content">
+      <p>You have received a new message from your portfolio website:</p>
+      
+      <div class="contact-info">
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Subject:</strong> ${subject}</p>
+      </div>
+      
+      <p><strong>Message:</strong></p>
+      <div class="message-content">
+        <p>${message}</p>
+      </div>
+    </div>
+    <div class="footer">
+      <p>This message was sent from your portfolio contact form.</p>
+    </div>
+  </div>
+</body>
+</html>
+`;
 
 serve(async (req) => {
-  // Handle CORS preflight requests
-  if (req.method === "OPTIONS") {
+  // Handle CORS
+  if (req.method === 'OPTIONS') {
     return new Response(null, {
-      status: 204,
       headers: corsHeaders,
     });
   }
 
   try {
-    const { name, email, message, subject } = await req.json();
+    const { name, email, subject, message, siteOwner = 'Srajal Agrawal', ownerEmail = 'agrawalsrajal2012@gmail.com' } = await req.json();
 
-    // Send confirmation email to visitor
-    const visitorResponse = await resend.emails.send({
-      from: `Srajal Agrawal <${PORTFOLIO_EMAIL}>`,
-      to: [email],
-      subject: "Thank you for your message",
-      html: `
-        <!DOCTYPE html>
-        <html>
-        <head>
-          <meta charset="utf-8">
-          <meta name="viewport" content="width=device-width, initial-scale=1">
-          <title>Thank you for your message</title>
-          <style>
-            body {
-              font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-              line-height: 1.6;
-              color: #333;
-              max-width: 600px;
-              margin: 0 auto;
-              padding: 20px;
-              text-align: left;
-            }
-            .email-container {
-              border: 1px solid #e0e0e0;
-              border-radius: 8px;
-              padding: 20px;
-              background-color: #ffffff;
-            }
-            .header {
-              padding-bottom: 20px;
-              border-bottom: 1px solid #e0e0e0;
-              margin-bottom: 20px;
-            }
-            .header h2 {
-              color: #4f46e5;
-              margin: 0;
-              text-align: left;
-            }
-            .content {
-              padding: 20px 0;
-              text-align: left;
-            }
-            .footer {
-              padding-top: 20px;
-              border-top: 1px solid #e0e0e0;
-              margin-top: 20px;
-              color: #666;
-              font-size: 14px;
-              text-align: left;
-            }
-          </style>
-        </head>
-        <body>
-          <div class="email-container">
-            <div class="header">
-              <h2>Thank You for Reaching Out</h2>
-            </div>
-            <div class="content">
-              <p>Dear ${name},</p>
-              <p>Thank you for contacting me. I've received your message and will get back to you as soon as possible.</p>
-              <p>Here's a confirmation of what you sent:</p>
-              <p><strong>Subject:</strong> ${subject}</p>
-              <p><strong>Message:</strong> ${message}</p>
-            </div>
-            <div class="footer">
-              <p>Best regards,</p>
-              <p>Srajal Agrawal</p>
-            </div>
-          </div>
-        </body>
-        </html>
-      `,
+    if (!name || !email || !message) {
+      return new Response(
+        JSON.stringify({ error: 'Name, email, and message are required' }),
+        {
+          status: 400,
+          headers: {
+            ...corsHeaders,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+    }
+
+    const formattedSubject = subject || 'Message from your portfolio website';
+
+    if (!RESEND_API_KEY) {
+      return new Response(
+        JSON.stringify({ error: 'Resend API key is missing' }),
+        {
+          status: 500,
+          headers: {
+            ...corsHeaders,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+    }
+
+    // Send confirmation email to user
+    const userEmailResponse = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${RESEND_API_KEY}`,
+      },
+      body: JSON.stringify({
+        from: `${siteOwner} <${PORTFOLIO_EMAIL || ownerEmail}>`,
+        to: [email],
+        subject: 'Thank you for your message',
+        html: createUserEmailTemplate(name, message, siteOwner),
+      }),
     });
 
-    // Send notification email to portfolio owner
-    const ownerResponse = await resend.emails.send({
-      from: `Portfolio Contact <${PORTFOLIO_EMAIL}>`,
-      to: ["agrawalsrajal2012@gmail.com"],
-      subject: `New Contact Form Submission: ${subject}`,
-      html: `
-        <!DOCTYPE html>
-        <html>
-        <head>
-          <meta charset="utf-8">
-          <meta name="viewport" content="width=device-width, initial-scale=1">
-          <title>New Contact Form Submission</title>
-          <style>
-            body {
-              font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-              line-height: 1.6;
-              color: #333;
-              max-width: 600px;
-              margin: 0 auto;
-              padding: 20px;
-              text-align: left;
-            }
-            .email-container {
-              border: 1px solid #e0e0e0;
-              border-radius: 8px;
-              padding: 20px;
-              background-color: #ffffff;
-            }
-            .header {
-              padding-bottom: 20px;
-              border-bottom: 1px solid #e0e0e0;
-              margin-bottom: 20px;
-              text-align: left;
-            }
-            .header h2 {
-              color: #4f46e5;
-              margin: 0;
-            }
-            .content {
-              padding: 20px 0;
-              text-align: left;
-            }
-            .message-box {
-              background-color: #f9f9f9;
-              padding: 15px;
-              border-radius: 6px;
-              margin-top: 10px;
-              border-left: 4px solid #4f46e5;
-              text-align: left;
-            }
-            .contact-details {
-              margin-top: 20px;
-              background-color: #f0f4ff;
-              padding: 15px;
-              border-radius: 6px;
-              text-align: left;
-            }
-            .footer {
-              padding-top: 20px;
-              border-top: 1px solid #e0e0e0;
-              margin-top: 20px;
-              color: #666;
-              font-size: 14px;
-              text-align: left;
-            }
-          </style>
-        </head>
-        <body>
-          <div class="email-container">
-            <div class="header">
-              <h2>New Contact Form Submission</h2>
-            </div>
-            <div class="content">
-              <div class="contact-details">
-                <p><strong>From:</strong> ${name} (${email})</p>
-                <p><strong>Subject:</strong> ${subject}</p>
-              </div>
-              <p><strong>Message:</strong></p>
-              <div class="message-box">
-                ${message.replace(/\n/g, '<br>')}
-              </div>
-            </div>
-            <div class="footer">
-              <p>This message was sent from your portfolio contact form.</p>
-            </div>
-          </div>
-        </body>
-        </html>
-      `,
+    if (!userEmailResponse.ok) {
+      const userError = await userEmailResponse.text();
+      console.error('Error sending user email:', userError);
+    }
+
+    // Send notification email to site owner
+    const ownerEmailResponse = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${RESEND_API_KEY}`,
+      },
+      body: JSON.stringify({
+        from: `${siteOwner} <${PORTFOLIO_EMAIL || ownerEmail}>`,
+        to: [ownerEmail],
+        subject: `New Contact Form: ${formattedSubject}`,
+        html: createOwnerEmailTemplate(name, email, formattedSubject, message),
+      }),
     });
+
+    if (!ownerEmailResponse.ok) {
+      const ownerError = await ownerEmailResponse.text();
+      console.error('Error sending owner email:', ownerError);
+    }
 
     return new Response(
-      JSON.stringify({ 
-        success: true, 
-        visitorEmail: visitorResponse,
-        ownerEmail: ownerResponse
-      }),
+      JSON.stringify({ success: true }),
       {
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
         status: 200,
+        headers: {
+          ...corsHeaders,
+          'Content-Type': 'application/json',
+        },
       }
     );
   } catch (error) {
+    console.error('Error processing request:', error);
     return new Response(
-      JSON.stringify({ success: false, error: error.message }),
+      JSON.stringify({ error: 'Failed to send email' }),
       {
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
         status: 500,
+        headers: {
+          ...corsHeaders,
+          'Content-Type': 'application/json',
+        },
       }
     );
   }

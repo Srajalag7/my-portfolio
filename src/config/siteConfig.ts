@@ -6,6 +6,10 @@
  */
 
 export const siteConfig = {
+  // Site Information
+  siteOwner: "Srajal Agrawal",
+  contactEmail: "agrawalsrajal2012@gmail.com",
+  
   // Supabase Configuration
   supabase: {
     contactTable: "contact_submissions",

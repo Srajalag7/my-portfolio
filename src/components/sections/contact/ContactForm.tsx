@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Send } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { siteConfig } from "@/config/siteConfig";
 
 interface FormData {
   name: string;
@@ -35,7 +36,7 @@ const ContactForm = () => {
     try {
       // Save submission to Supabase
       const { error: supabaseError } = await supabase
-        .from('contact_submissions')
+        .from(siteConfig.supabase.contactTable)
         .insert({
           name: formData.name,
           email: formData.email,
@@ -50,7 +51,11 @@ const ContactForm = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          siteOwner: siteConfig.siteOwner,
+          ownerEmail: siteConfig.contactEmail
+        }),
       });
       
       if (!response.ok) {

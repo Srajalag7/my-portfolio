@@ -20,4 +20,3 @@ enabled = true
 
 [functions.send-email]
 verify_jwt = false
-

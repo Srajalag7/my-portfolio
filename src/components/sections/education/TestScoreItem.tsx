@@ -18,7 +18,7 @@ const TestScoreItem: React.FC<TestScoreItemProps> = ({
       <div className="p-3 bg-primary/10 text-primary rounded-lg flex-shrink-0">
         <Award size={20} />
       </div>
-      <div>
+      <div className="flex-grow">
         <h4 className="font-medium">{title}</h4>
         <p className="text-sm text-muted-foreground">
           {score} • {date}

@@ -9,6 +9,7 @@ export const siteConfig = {
   // Supabase Configuration
   supabase: {
     contactTable: "contact_submissions",
+    visitsTable: "page_visits",
     columns: {
       name: "name",
       email: "email",
@@ -29,4 +30,3 @@ export const siteConfig = {
     }
   }
 };
-

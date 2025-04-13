@@ -28,7 +28,7 @@ serve(async (req) => {
 
     // Send confirmation email to visitor
     const visitorResponse = await resend.emails.send({
-      from: `Portfolio <${PORTFOLIO_EMAIL}>`,
+      from: `Srajal Agrawal <${PORTFOLIO_EMAIL}>`,
       to: [email],
       subject: "Thank you for your message",
       html: `
@@ -46,6 +46,7 @@ serve(async (req) => {
               max-width: 600px;
               margin: 0 auto;
               padding: 20px;
+              text-align: left;
             }
             .email-container {
               border: 1px solid #e0e0e0;
@@ -54,7 +55,6 @@ serve(async (req) => {
               background-color: #ffffff;
             }
             .header {
-              text-align: center;
               padding-bottom: 20px;
               border-bottom: 1px solid #e0e0e0;
               margin-bottom: 20px;
@@ -62,17 +62,19 @@ serve(async (req) => {
             .header h2 {
               color: #4f46e5;
               margin: 0;
+              text-align: left;
             }
             .content {
               padding: 20px 0;
+              text-align: left;
             }
             .footer {
-              text-align: center;
               padding-top: 20px;
               border-top: 1px solid #e0e0e0;
               margin-top: 20px;
               color: #666;
               font-size: 14px;
+              text-align: left;
             }
           </style>
         </head>
@@ -90,7 +92,7 @@ serve(async (req) => {
             </div>
             <div class="footer">
               <p>Best regards,</p>
-              <p>Portfolio Owner</p>
+              <p>Srajal Agrawal</p>
             </div>
           </div>
         </body>
@@ -101,7 +103,7 @@ serve(async (req) => {
     // Send notification email to portfolio owner
     const ownerResponse = await resend.emails.send({
       from: `Portfolio Contact <${PORTFOLIO_EMAIL}>`,
-      to: [PORTFOLIO_EMAIL],
+      to: ["agrawalsrajal2012@gmail.com"],
       subject: `New Contact Form Submission: ${subject}`,
       html: `
         <!DOCTYPE html>
@@ -118,6 +120,7 @@ serve(async (req) => {
               max-width: 600px;
               margin: 0 auto;
               padding: 20px;
+              text-align: left;
             }
             .email-container {
               border: 1px solid #e0e0e0;
@@ -129,6 +132,7 @@ serve(async (req) => {
               padding-bottom: 20px;
               border-bottom: 1px solid #e0e0e0;
               margin-bottom: 20px;
+              text-align: left;
             }
             .header h2 {
               color: #4f46e5;
@@ -136,6 +140,7 @@ serve(async (req) => {
             }
             .content {
               padding: 20px 0;
+              text-align: left;
             }
             .message-box {
               background-color: #f9f9f9;
@@ -143,20 +148,22 @@ serve(async (req) => {
               border-radius: 6px;
               margin-top: 10px;
               border-left: 4px solid #4f46e5;
+              text-align: left;
             }
             .contact-details {
               margin-top: 20px;
               background-color: #f0f4ff;
               padding: 15px;
               border-radius: 6px;
+              text-align: left;
             }
             .footer {
-              text-align: center;
               padding-top: 20px;
               border-top: 1px solid #e0e0e0;
               margin-top: 20px;
               color: #666;
               font-size: 14px;
+              text-align: left;
             }
           </style>
         </head>

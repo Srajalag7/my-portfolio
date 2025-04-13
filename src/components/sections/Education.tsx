@@ -1,3 +1,4 @@
+
 import React from "react";
 import SectionHeader from "../SectionHeader";
 import EducationItem from "./education/EducationItem";
@@ -8,14 +9,14 @@ const educationData = [
   {
     institution: "University of Waterloo",
     degree: "Bachelor of Computer Science",
-    date: "2021 - Present",
+    period: "2021 - Present",
     description:
       "Currently pursuing a Bachelor of Computer Science with a focus on software engineering and artificial intelligence. GPA: 3.9/4.0",
   },
   {
     institution: "Harvard University",
     degree: "CS50 - Introduction to Computer Science",
-    date: "2020",
+    period: "2020",
     description:
       "Completed Harvard University's CS50, an introductory computer science course, covering topics such as algorithms, data structures, and web development.",
   },
@@ -23,16 +24,18 @@ const educationData = [
 
 const certificationData = [
   {
-    name: "AWS Certified Cloud Practitioner",
+    title: "AWS Certified Cloud Practitioner",
     issuer: "Amazon Web Services",
     date: "2023",
-    link: "https://www.example.com/aws-cloud-practitioner",
+    credentialId: "AWS-123456",
+    skills: ["AWS", "Cloud Computing", "DevOps"],
   },
   {
-    name: "Google Data Analytics Professional Certificate",
+    title: "Google Data Analytics Professional Certificate",
     issuer: "Google via Coursera",
     date: "2022",
-    link: "https://www.example.com/google-data-analytics",
+    credentialId: "GDAPC-789012",
+    skills: ["Data Analysis", "SQL", "Tableau", "R Programming"],
   },
 ];
 
@@ -67,8 +70,7 @@ const Education = () => {
                 key={index}
                 institution={item.institution}
                 degree={item.degree}
-                date={item.date}
-                description={item.description}
+                period={item.period}
               />
             ))}
             
@@ -91,10 +93,11 @@ const Education = () => {
             {certificationData.map((cert, index) => (
               <CertificationItem
                 key={index}
-                name={cert.name}
+                title={cert.title}
                 issuer={cert.issuer}
                 date={cert.date}
-                link={cert.link}
+                credentialId={cert.credentialId}
+                skills={cert.skills}
               />
             ))}
           </div>

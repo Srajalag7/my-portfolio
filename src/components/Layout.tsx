@@ -31,15 +31,18 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     (window as any)[siteConfig.analytics.consoleFunctions.viewSubmissions] = async () => {
       try {
         const { data, error } = await supabase
-          .from(siteConfig.supabase.contactTable)
+          .from('contact_submissions')
           .select('*')
           .order('created_at', { ascending: false });
           
         if (error) throw error;
         
-        return data && data.length > 0 
-          ? `📨 You have ${data.length} contact submissions. Latest from ${data[0].name} (${data[0].email}) on ${new Date(data[0].created_at).toLocaleString()}`
-          : "No contact form submissions yet.";
+        if (data && data.length > 0) {
+          const submission = data[0];
+          return `📨 You have ${data.length} contact submissions. Latest from ${submission.name} (${submission.email}) on ${new Date(submission.created_at).toLocaleString()}`;
+        } else {
+          return "No contact form submissions yet.";
+        }
       } catch (error) {
         console.error("Error getting submissions:", error);
         return `To view contact form submissions, check your Supabase dashboard "${siteConfig.supabase.contactTable}" table`;
